@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/container/my_container.dart';
 import 'text/my_list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -18,7 +19,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyTextListWidget(),
+        child: MyContainer(),
+//        child: MyTextListWidget(),
       ),
     );
   }
