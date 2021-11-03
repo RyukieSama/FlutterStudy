@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/container/my_container.dart';
+import 'package:flutter_study/row_column/my_row_column.dart';
 import 'text/my_list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +20,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyContainer(),
+        child: MyRowColumn(),
+        // child: MyContainer(),
 //        child: MyTextListWidget(),
       ),
     );
