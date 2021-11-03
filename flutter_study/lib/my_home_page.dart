@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'my_list_widget.dart';
+import 'text/my_list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyListWidget(),
+        child: MyTextListWidget(),
       ),
     );
   }
