@@ -10,7 +10,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green,// 导航背景
+        splashColor: const Color.fromRGBO(1, 1, 1, 0),
+      ),
+      title: "FakeWechat",
       home: MyHomePage(),
     );
   }
