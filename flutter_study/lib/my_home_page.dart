@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/widget/ratio/my_ratio.dart';
 import 'package:flutter_study/widget/stack/my_stack.dart';
+import 'package:flutter_study/widget/state/my_stateful.dart';
 import 'widget/container/my_container.dart';
 import 'widget/row_column/my_row_column.dart';
 import 'widget/text/my_list_widget.dart';
@@ -22,7 +23,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyRatio(),
+        child: MyStatefulWidget(),
+        // child: MyRatio(),
       //  child: MyStack(),
         //  child: MyRowColumn(),
         // child: MyContainer(),
