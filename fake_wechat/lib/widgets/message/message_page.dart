@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MessagePage extends StatelessWidget {
+class MessagePage extends StatefulWidget {
+  @override
+  _MessagePageState createState() => _MessagePageState();
+}
+
+class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.brown,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('微信'),
+      ),
+      body: Container(
+        color: Colors.yellow,
+      ),
     );
   }
 }

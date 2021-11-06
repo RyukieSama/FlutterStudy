@@ -1,3 +1,7 @@
+import 'package:fake_wechat/widgets/me/me_page.dart';
+import 'package:fake_wechat/widgets/message/message_page.dart';
+import 'package:fake_wechat/widgets/moment/moment_page.dart';
+import 'package:fake_wechat/widgets/contacts/contacts_page.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -11,10 +15,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageDataSource extends State<MyHomePage> {
   int _selectedTab = 0;
+  final List<Widget> _pages = [MessagePage(), ContactsPage(), MommentPage(), MinePage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _pages[_selectedTab],
       bottomNavigationBar: BottomNavigationBar(
 //        type: BottomNavigationBarType.fixed, // 这样就是标准的哪种
 //        fixedColor: Colors.green,//选中颜色
