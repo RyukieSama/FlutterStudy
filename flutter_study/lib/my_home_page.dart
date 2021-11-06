@@ -21,8 +21,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-//        child: MyStack(),
-         child: MyRowColumn(),
+       child: MyStack(),
+        //  child: MyRowColumn(),
         // child: MyContainer(),
 //        child: MyTextListWidget(),
       ),
