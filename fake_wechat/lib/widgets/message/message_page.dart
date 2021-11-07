@@ -14,6 +14,7 @@ class _MessagePageState extends State<MessagePage> {
       ),
       body: Container(
         color: Colors.yellow,
+        child: const Image(image: AssetImage('images/公众号.png')),
       ),
     );
   }
