@@ -17,6 +17,7 @@ class MomentHomeCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: 44,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
