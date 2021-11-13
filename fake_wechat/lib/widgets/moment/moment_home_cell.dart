@@ -19,38 +19,50 @@ class MomentHomeCell extends StatelessWidget {
     return Container(
       color: Colors.white,
       height: 44,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            color: Colors.green,
-            child: Row(
-              children: [
-                Image(image: AssetImage(imageName)),
-                const SizedBox(
-                  width: 8,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                color: Colors.green,
+                child: Row(
+                  children: [
+                    Image(image: AssetImage(imageName)),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(title),
+                  ],
                 ),
-                Text(title),
-              ],
-            ),
+              ),
+              Container(
+                  color: Colors.yellow,
+                  child: Row(
+                    children: [
+                      subTitle != null ? Text(subTitle!) : Container(),
+                      subImageName != null
+                          ? Image.asset(subImageName!)
+                          : Container(),
+                      Image.asset(
+                        'images/icon_right.png',
+                        width: 15,
+                      )
+                    ],
+                  ))
+            ],
           ),
-          Container(
-              color: Colors.yellow,
-              child: Row(
-                children: [
-                  subTitle != null ? Text(subTitle!) : Container(),
-                  subImageName != null
-                      ? Image.asset(subImageName!)
-                      : Container(),
-                  Image.asset(
-                    'images/icon_right.png',
-                    width: 15,
-                  )
-                ],
-              ))
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(left: 48),
+              height: 0.5,
+              color: Colors.grey,
+            ),
+          )
         ],
-      ),
+      )
     );
   }
 }
