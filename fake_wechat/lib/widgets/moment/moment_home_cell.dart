@@ -5,22 +5,21 @@ class MomentHomeCell extends StatelessWidget {
   final String? subTitle;
   final String imageName;
   final String? subImageName;
+  final GestureTapCallback? didSelected;
 
   MomentHomeCell(
       {required this.title,
       this.subTitle,
       required this.imageName,
-      this.subImageName})
+      this.subImageName,
+      this.didSelected})
       : assert(title != null, '标题不能为空'),
         assert(imageName != null, '主图标不能为空');
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // ignore: avoid_print
-        print(title);
-      },
+      onTap: didSelected,
       child: Container(
           color: Colors.white,
           height: 44,
