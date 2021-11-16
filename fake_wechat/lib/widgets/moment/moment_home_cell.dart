@@ -1,27 +1,53 @@
 import 'package:flutter/material.dart';
 
-class MomentHomeCell extends StatelessWidget {
+class MomentHomeCell extends StatefulWidget {
   final String title;
   final String? subTitle;
   final String imageName;
   final String? subImageName;
   final GestureTapCallback? didSelected;
 
+  bool _heighlight = false;
+
   MomentHomeCell(
       {required this.title,
-      this.subTitle,
-      required this.imageName,
-      this.subImageName,
-      this.didSelected})
+        this.subTitle,
+        required this.imageName,
+        this.subImageName,
+        this.didSelected})
       : assert(title != null, '标题不能为空'),
         assert(imageName != null, '主图标不能为空');
 
   @override
+  _MomentHomeCellState createState() => _MomentHomeCellState();
+}
+
+class _MomentHomeCellState extends State<MomentHomeCell> {
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: didSelected,
+      onTap: widget.didSelected,
+      onTapDown: (TapDownDetails details){
+        print('onTapDown');
+        setState(() {
+          widget._heighlight = true;
+        });
+      },
+      onTapCancel: (){
+        print('onTapCancel');
+        setState(() {
+          widget._heighlight = false;
+        });
+      },
+      onTapUp: (TapUpDetails details){
+        print('onTapUp');
+        setState(() {
+          widget._heighlight = false;
+        });
+      },
       child: Container(
-          color: Colors.white,
+          color: widget._heighlight == true ? Colors.grey : Colors.white,
           height: 44,
           child: Stack(
             children: [
@@ -33,11 +59,11 @@ class MomentHomeCell extends StatelessWidget {
                     color: Colors.green,
                     child: Row(
                       children: [
-                        Image(image: AssetImage(imageName)),
+                        Image(image: AssetImage(widget.imageName)),
                         const SizedBox(
                           width: 8,
                         ),
-                        Text(title),
+                        Text(widget.title),
                       ],
                     ),
                   ),
@@ -45,9 +71,9 @@ class MomentHomeCell extends StatelessWidget {
                       color: Colors.yellow,
                       child: Row(
                         children: [
-                          subTitle != null ? Text(subTitle!) : Container(),
-                          subImageName != null
-                              ? Image.asset(subImageName!)
+                          widget.subTitle != null ? Text(widget.subTitle!) : Container(),
+                          widget.subImageName != null
+                              ? Image.asset(widget.subImageName!)
                               : Container(),
                           Image.asset(
                             'images/icon_right.png',
