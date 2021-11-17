@@ -19,10 +19,14 @@ class MeHeaderView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    color: Colors.grey,
+//                    color: Colors.grey, // 和 decoration 不能共存
                     height: 60,
                     width: 60,
                     margin: EdgeInsets.only(left: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   SizedBox(width: 12,),
                   Column(
