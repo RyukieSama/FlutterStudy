@@ -20,11 +20,16 @@ class _ContactsPageState extends State<ContactsPage> {
             color: Colors.blue,
             child: const Icon(Icons.print),
           ),
-          Container(
-            width: 44,
-            color: Colors.blue,
-            child: const Icon(Icons.person_add),
-          ),
+          GestureDetector(
+            onTap: (){
+              print('添加联系人');
+            },
+            child: Container(
+              width: 44,
+              color: Colors.blue,
+              child: const Icon(Icons.person_add),
+            ),
+          )
         ],
       ),
       body: Container(
