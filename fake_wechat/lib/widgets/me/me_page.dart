@@ -1,3 +1,4 @@
+import 'package:fake_wechat/widgets/me/me_header_view.dart';
 import 'package:fake_wechat/widgets/moment/moment_home_cell.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,10 @@ class _MinePageState extends State<MinePage> {
             Container(
               child: ListView(
                 children: <Widget> [
+                  MeHeaderView(),
+                  SizedBox(
+                    height: 12,
+                  ),
                   MomentHomeCell(
                     title: '支付',
                     imageName: 'images/微信 支付.png',
