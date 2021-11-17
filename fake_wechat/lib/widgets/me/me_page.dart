@@ -15,7 +15,10 @@ class _MinePageState extends State<MinePage> {
         color: Colors.blueGrey,
         child: Stack(
           children: [
-            Container(
+            MediaQuery.removePadding(
+              removeTop: true,
+              context: context,
+              child: Container(
               child: ListView(
                 children: <Widget> [
                   MeHeaderView(),
@@ -61,6 +64,7 @@ class _MinePageState extends State<MinePage> {
                   ),
                 ],
               ),
+            ),
             ),
             Positioned(
               right: 12,
