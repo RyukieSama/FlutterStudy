@@ -23,9 +23,11 @@ class MeHeaderView extends StatelessWidget {
                     height: 60,
                     width: 60,
                     margin: EdgeInsets.only(left: 12),
+//                    child: Image(image: AssetImage('images/header_avatar.GIF')),// decoration 的圆角对这里的child无效
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(image: AssetImage('images/header_avatar.GIF')),
                     ),
                   ),
                   SizedBox(width: 12,),
@@ -33,7 +35,7 @@ class MeHeaderView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('小庆儿很小气儿',
+                      Text('Lab.Lawliet',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
