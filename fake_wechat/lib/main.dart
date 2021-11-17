@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,// 导航背景
+//        primarySwatch: Colors.green,// 导航背景
         splashColor: const Color.fromRGBO(1, 1, 1, 0),
       ),
       title: "FakeWechat",
