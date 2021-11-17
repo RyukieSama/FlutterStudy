@@ -1,18 +1,37 @@
 class Friends {
   Friends({
-    required this.imageUrl,
+    this.imageUrl,
     required this.name,
-    required this.indexLetter,
+    this.indexLetter,
     this.imageAssets,
   });
 
   final String? imageAssets;
-  final String imageUrl;
+  final String? imageUrl;
   final String name;
-  final String indexLetter;
+  final String? indexLetter;
 }
 
-List<Friends> friednsData = [
+List<Friends> friendsHeaderData = [
+  Friends(
+    imageAssets: 'images/新的朋友.png',
+    name: '新的朋友',
+  ),
+  Friends(
+    imageAssets: 'images/群聊.png',
+    name: '群聊',
+  ),
+  Friends(
+    imageAssets: 'images/标签.png',
+    name: '标签',
+  ),
+  Friends(
+    imageAssets: 'images/公众号.png',
+    name: '公众号',
+  ),
+];
+
+List<Friends> friendsData = [
   Friends(
       imageUrl: 'https://randomuser.me/api/portraits/women/27.jpg',
       name: 'Lina',
