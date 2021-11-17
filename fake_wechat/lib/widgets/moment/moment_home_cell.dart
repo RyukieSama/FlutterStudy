@@ -56,7 +56,7 @@ class _MomentHomeCellState extends State<MomentHomeCell> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
-                    color: Colors.green,
+                    color: Colors.grey,
                     child: Row(
                       children: [
                         Image(image: AssetImage(widget.imageName)),
