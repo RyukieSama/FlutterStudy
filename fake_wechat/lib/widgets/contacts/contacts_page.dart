@@ -11,13 +11,25 @@ class _ContactsPageState extends State<ContactsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+//        centerTitle: true,// 否则多个 actions 的话会被调整到左边去
         backgroundColor: UIConfig.appBarColor, // 和 primarySwatch 冲突
-        title: const Text('联系人'),
+        title: const Text('通讯录'),
+        actions: [
+          Container(
+            width: 44,
+            color: Colors.blue,
+            child: const Icon(Icons.print),
+          ),
+          Container(
+            width: 44,
+            color: Colors.blue,
+            child: const Icon(Icons.person_add),
+          ),
+        ],
       ),
       body: Container(
-        color: Colors.red,
+        color: Colors.white,
       ),
     );
   }
 }
-
