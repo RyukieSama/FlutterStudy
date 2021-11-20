@@ -24,7 +24,7 @@ class _ContactCell extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   avatarUrl != null
@@ -51,12 +51,12 @@ class _ContactCell extends StatelessWidget {
                           ),
                         )
                       : Container(),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -65,11 +65,11 @@ class _ContactCell extends StatelessWidget {
               ),
             ],
           ),
-          Positioned(
-            left: 50,
-            bottom: 0,
+          Align(
+            alignment: Alignment.bottomCenter,
             child: Container(
-              height: 1,
+              margin: const EdgeInsets.only(left: 48),
+              height: 0.5,
               color: Colors.grey,
             ),
           ),
