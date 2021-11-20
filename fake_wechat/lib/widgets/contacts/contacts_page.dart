@@ -68,7 +68,7 @@ class _ContactCell extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: const EdgeInsets.only(left: 48),
+              margin: const EdgeInsets.only(left: 70),
               height: 0.5,
               color: Colors.grey,
             ),
@@ -85,21 +85,39 @@ class ContactsPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<ContactsPage> {
+  @override
+  void initState() {
+    super.initState();
+    _contacts
+      ..addAll(friendsData)
+      ..addAll(friendsData)
+      ..sort((a, b) {
+        if (a.indexLetter == null || b.indexLetter == null) {
+          return 0;
+        }
+        return a.indexLetter!.compareTo(b.indexLetter!);
+      });
+    _systems.addAll(friendsHeaderData);
+  }
+
+  final List<Friends> _contacts = [];
+  final List<Friends> _systems = [];
+
   Widget _itemForRow(BuildContext context, int index) {
     if (index < 4) {
-      return index < friendsHeaderData.length
+      return index < _systems.length
           ? _ContactCell(
-              name: friendsHeaderData[index].name,
-              avatarUrl: friendsHeaderData[index].imageUrl,
-              assetName: friendsHeaderData[index].imageAssets,
+              name: _systems[index].name,
+              avatarUrl: _systems[index].imageUrl,
+              assetName: _systems[index].imageAssets,
             )
           : Container();
     }
-    return (index - 4) < friendsData.length
+    return (index - 4) < _contacts.length
         ? _ContactCell(
-            name: friendsData[index - 4].name,
-            avatarUrl: friendsData[index - 4].imageUrl,
-            assetName: friendsData[index - 4].imageAssets,
+            name: _contacts[index - 4].name,
+            avatarUrl: _contacts[index - 4].imageUrl,
+            assetName: _contacts[index - 4].imageAssets,
           )
         : Container();
   }
@@ -133,7 +151,7 @@ class _ContactsPageState extends State<ContactsPage> {
         color: Colors.white,
         child: ListView.builder(
           itemBuilder: _itemForRow,
-          itemCount: friendsData.length,
+          itemCount: _contacts.length,
         ),
       ),
     );

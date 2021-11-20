@@ -32,7 +32,7 @@ class _MommentPageState extends State<MommentPage> {
                 );
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             MomentHomeCell(
@@ -43,7 +43,7 @@ class _MommentPageState extends State<MommentPage> {
               title: '摇一摇',
               imageName: 'images/摇一摇.png',
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             MomentHomeCell(
@@ -54,14 +54,14 @@ class _MommentPageState extends State<MommentPage> {
               title: '搜一搜',
               imageName: 'images/搜一搜 2.png',
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             MomentHomeCell(
               title: '附近的人',
               imageName: 'images/附近的人icon.png',
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             MomentHomeCell(
@@ -74,7 +74,7 @@ class _MommentPageState extends State<MommentPage> {
               title: '游戏',
               imageName: 'images/游戏.png',
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             MomentHomeCell(
