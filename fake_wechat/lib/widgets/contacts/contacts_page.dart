@@ -191,13 +191,20 @@ class _ContactsPageState extends State<ContactsPage> {
               itemCount: _contacts.length,
             ),
           ),
-          Positioned(
-            top: 12,
-            bottom: 12,
-            right: 0,
-            width: 22,
-            child: IndexBar(dataSource: _indexs),
-          )
+          Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IndexBar(
+                    dataSource: _indexs,
+                  callBack: (index, title) {
+                      print('选择了$title');
+                  },
+                )
+              ],
+            ),
+          ),
         ],
       )
     );
