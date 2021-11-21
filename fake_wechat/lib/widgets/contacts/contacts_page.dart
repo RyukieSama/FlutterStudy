@@ -133,23 +133,17 @@ class _ContactsPageState extends State<ContactsPage> {
 
 
     int trueIndex = index - 4;
-    if ((trueIndex < _contacts.length)
+    // 是否隐藏Header
+    bool notShowHeader = (trueIndex < _contacts.length)
         && (trueIndex - 1 >= 0)
-        && (_contacts[trueIndex].indexLetter == _contacts[trueIndex - 1].indexLetter)) {
-        // 不显示头
-      return _ContactCell(
-        name: _contacts[trueIndex].name,
-        avatarUrl: _contacts[trueIndex].imageUrl,
-        assetName: _contacts[trueIndex].imageAssets,
-      );
-    }
+        && (_contacts[trueIndex].indexLetter == _contacts[trueIndex - 1].indexLetter);
 
     return trueIndex < _contacts.length
         ? _ContactCell(
             name: _contacts[trueIndex].name,
             avatarUrl: _contacts[trueIndex].imageUrl,
             assetName: _contacts[trueIndex].imageAssets,
-            indexLetter: _contacts[trueIndex].indexLetter,
+            indexLetter: notShowHeader ? null : _contacts[trueIndex].indexLetter,
           )
         : Container();
   }
