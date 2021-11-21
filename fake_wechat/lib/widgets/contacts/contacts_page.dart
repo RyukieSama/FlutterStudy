@@ -7,74 +7,91 @@ class _ContactCell extends StatelessWidget {
     required this.name,
     this.avatarUrl,
     this.assetName,
+    this.indexLetter,
   }) : assert((avatarUrl != null || assetName != null), '至少一张图片');
 
   final String name;
   final String? avatarUrl;
   final String? assetName;
+  final String? indexLetter;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      color: Colors.white,
-      child: Stack(
-        children: [
-          Row(
+    return Column(
+      children: [
+        Container(
+          color: Colors.grey,
+          height: indexLetter == null ? 0 : 22,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(width: 12,),
+              Text(indexLetter ?? ""),
+            ],
+          ),
+        ),
+        Container(
+          height: 60,
+          color: Colors.white,
+          child: Stack(
             children: [
               Row(
                 children: [
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  avatarUrl != null
-                      ? Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                              image: NetworkImage(avatarUrl!),
-                            ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      avatarUrl != null
+                          ? Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                            image: NetworkImage(avatarUrl!),
                           ),
-                        )
-                      : Container(),
-                  assetName != null
-                      ? Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                              image: AssetImage(assetName!),
-                            ),
+                        ),
+                      )
+                          : Container(),
+                      assetName != null
+                          ? Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                            image: AssetImage(assetName!),
                           ),
-                        )
-                      : Container(),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                        ),
+                      )
+                          : Container(),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 70),
+                  height: 0.5,
+                  color: Colors.grey,
+                ),
+              ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: const EdgeInsets.only(left: 70),
-              height: 0.5,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -113,11 +130,26 @@ class _ContactsPageState extends State<ContactsPage> {
             )
           : Container();
     }
-    return (index - 4) < _contacts.length
+
+
+    int trueIndex = index - 4;
+    if ((trueIndex < _contacts.length)
+        && (trueIndex - 1 >= 0)
+        && (_contacts[trueIndex].indexLetter == _contacts[trueIndex - 1].indexLetter)) {
+        // 不显示头
+      return _ContactCell(
+        name: _contacts[trueIndex].name,
+        avatarUrl: _contacts[trueIndex].imageUrl,
+        assetName: _contacts[trueIndex].imageAssets,
+      );
+    }
+
+    return trueIndex < _contacts.length
         ? _ContactCell(
-            name: _contacts[index - 4].name,
-            avatarUrl: _contacts[index - 4].imageUrl,
-            assetName: _contacts[index - 4].imageAssets,
+            name: _contacts[trueIndex].name,
+            avatarUrl: _contacts[trueIndex].imageUrl,
+            assetName: _contacts[trueIndex].imageAssets,
+            indexLetter: _contacts[trueIndex].indexLetter,
           )
         : Container();
   }
