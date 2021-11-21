@@ -1,5 +1,6 @@
 import 'package:fake_wechat/configs/ui_const.dart';
 import 'package:fake_wechat/widgets/contacts/friends_data.dart';
+import 'package:fake_wechat/widgets/contacts/index_bar.dart';
 import 'package:flutter/material.dart';
 
 class _ContactCell extends StatelessWidget {
@@ -114,11 +115,19 @@ class _ContactsPageState extends State<ContactsPage> {
         }
         return a.indexLetter!.compareTo(b.indexLetter!);
       });
+
     _systems.addAll(friendsHeaderData);
+
+    _contacts.forEach((element) {
+      if (element.indexLetter != null && _indexs.contains(element.indexLetter) == false) {
+        _indexs.add(element.indexLetter!);
+      }
+    });
   }
 
   final List<Friends> _contacts = [];
   final List<Friends> _systems = [];
+  final List<String> _indexs = [];
 
   Widget _itemForRow(BuildContext context, int index) {
     if (index < 4) {
@@ -173,13 +182,24 @@ class _ContactsPageState extends State<ContactsPage> {
           )
         ],
       ),
-      body: Container(
-        color: Colors.white,
-        child: ListView.builder(
-          itemBuilder: _itemForRow,
-          itemCount: _contacts.length,
-        ),
-      ),
+      body: Stack(
+        children: [
+          Container(
+            color: Colors.white,
+            child: ListView.builder(
+              itemBuilder: _itemForRow,
+              itemCount: _contacts.length,
+            ),
+          ),
+          Positioned(
+            top: 12,
+            bottom: 12,
+            right: 0,
+            width: 22,
+            child: IndexBar(dataSource: _indexs),
+          )
+        ],
+      )
     );
   }
 }
