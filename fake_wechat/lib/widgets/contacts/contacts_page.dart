@@ -128,7 +128,8 @@ class _ContactsPageState extends State<ContactsPage> {
                   callBack: (index, title) {
                       if (_indexOffsets[index] != null) {
                         print('选择了$title');
-                        _scroller.animateTo(_indexOffsets[index]!, duration: const Duration(microseconds: 250), curve: Curves.easeIn);
+                        _scroller.jumpTo(_indexOffsets[index]!);
+//                        _scroller.animateTo(_indexOffsets[index]!, duration: const Duration(microseconds: 250), curve: Curves.easeIn);
                       }
                   },
                 )
