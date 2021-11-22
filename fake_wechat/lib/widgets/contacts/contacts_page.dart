@@ -1,101 +1,8 @@
 import 'package:fake_wechat/configs/ui_const.dart';
+import 'package:fake_wechat/widgets/contacts/contact_cell.dart';
 import 'package:fake_wechat/widgets/contacts/friends_data.dart';
 import 'package:fake_wechat/widgets/contacts/index_bar.dart';
 import 'package:flutter/material.dart';
-
-class _ContactCell extends StatelessWidget {
-  const _ContactCell({
-    required this.name,
-    this.avatarUrl,
-    this.assetName,
-    this.indexLetter,
-  }) : assert((avatarUrl != null || assetName != null), '至少一张图片');
-
-  final String name;
-  final String? avatarUrl;
-  final String? assetName;
-  final String? indexLetter;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.grey,
-          height: indexLetter == null ? 0 : 22,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(width: 12,),
-              Text(indexLetter ?? ""),
-            ],
-          ),
-        ),
-        Container(
-          height: 60,
-          color: Colors.white,
-          child: Stack(
-            children: [
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      avatarUrl != null
-                          ? Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          image: DecorationImage(
-                            image: NetworkImage(avatarUrl!),
-                          ),
-                        ),
-                      )
-                          : Container(),
-                      assetName != null
-                          ? Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          image: DecorationImage(
-                            image: AssetImage(assetName!),
-                          ),
-                        ),
-                      )
-                          : Container(),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 70),
-                  height: 0.5,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class ContactsPage extends StatefulWidget {
   @override
@@ -128,11 +35,12 @@ class _ContactsPageState extends State<ContactsPage> {
   final List<Friends> _contacts = [];
   final List<Friends> _systems = [];
   final List<String> _indexs = [];
+  ScrollController _scroller = ScrollController();
 
   Widget _itemForRow(BuildContext context, int index) {
     if (index < 4) {
       return index < _systems.length
-          ? _ContactCell(
+          ? ContactCell(
               name: _systems[index].name,
               avatarUrl: _systems[index].imageUrl,
               assetName: _systems[index].imageAssets,
@@ -148,7 +56,7 @@ class _ContactsPageState extends State<ContactsPage> {
         && (_contacts[trueIndex].indexLetter == _contacts[trueIndex - 1].indexLetter);
 
     return trueIndex < _contacts.length
-        ? _ContactCell(
+        ? ContactCell(
             name: _contacts[trueIndex].name,
             avatarUrl: _contacts[trueIndex].imageUrl,
             assetName: _contacts[trueIndex].imageAssets,
@@ -187,6 +95,7 @@ class _ContactsPageState extends State<ContactsPage> {
           Container(
             color: Colors.white,
             child: ListView.builder(
+              controller: _scroller,
               itemBuilder: _itemForRow,
               itemCount: _contacts.length,
             ),
@@ -200,6 +109,7 @@ class _ContactsPageState extends State<ContactsPage> {
                     dataSource: _indexs,
                   callBack: (index, title) {
                       print('选择了$title');
+                      _scroller.animateTo(200, duration: const Duration(microseconds: 250), curve: Curves.easeIn);
                   },
                 )
               ],
