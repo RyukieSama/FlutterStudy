@@ -10,9 +10,19 @@ class ContactsPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<ContactsPage> {
+  final List<Friends> _contacts = [];
+  final List<Friends> _systems = [];
+  final List<String> _indexs = [];
+  ScrollController _scroller = ScrollController();
+  Map<int, double> _indexOffsets = {};
+  
   @override
   void initState() {
     super.initState();
+
+    double offsetY = 0;
+
+
     _contacts
       ..addAll(friendsData)
       ..addAll(friendsData)
@@ -23,19 +33,27 @@ class _ContactsPageState extends State<ContactsPage> {
         return a.indexLetter!.compareTo(b.indexLetter!);
       });
 
-    _systems.addAll(friendsHeaderData);
+    _systems
+        .addAll(friendsHeaderData);
 
+    offsetY = ContactCell.baseCellHeight * friendsHeaderData.length.toDouble();
+
+    var index = 0;
+    
     _contacts.forEach((element) {
       if (element.indexLetter != null && _indexs.contains(element.indexLetter) == false) {
         _indexs.add(element.indexLetter!);
+
+        _indexOffsets.addAll({ index : offsetY });
+
+        index += 1;
+        offsetY += ContactCell.baseCellHeight + ContactCell.indexHeight;
+      }
+      else {
+        offsetY += ContactCell.baseCellHeight;
       }
     });
   }
-
-  final List<Friends> _contacts = [];
-  final List<Friends> _systems = [];
-  final List<String> _indexs = [];
-  ScrollController _scroller = ScrollController();
 
   Widget _itemForRow(BuildContext context, int index) {
     if (index < 4) {
@@ -97,7 +115,7 @@ class _ContactsPageState extends State<ContactsPage> {
             child: ListView.builder(
               controller: _scroller,
               itemBuilder: _itemForRow,
-              itemCount: _contacts.length,
+              itemCount: (_systems.length + _contacts.length),
             ),
           ),
           Align(
@@ -108,8 +126,10 @@ class _ContactsPageState extends State<ContactsPage> {
                 IndexBar(
                     dataSource: _indexs,
                   callBack: (index, title) {
-                      print('选择了$title');
-                      _scroller.animateTo(200, duration: const Duration(microseconds: 250), curve: Curves.easeIn);
+                      if (_indexOffsets[index] != null) {
+                        print('选择了$title');
+                        _scroller.animateTo(_indexOffsets[index]!, duration: const Duration(microseconds: 250), curve: Curves.easeIn);
+                      }
                   },
                 )
               ],

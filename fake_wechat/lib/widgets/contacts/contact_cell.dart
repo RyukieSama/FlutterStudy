@@ -9,6 +9,9 @@ class ContactCell extends StatelessWidget {
     this.indexLetter,
   }) : assert((avatarUrl != null || assetName != null), '至少一张图片');
 
+  static double baseCellHeight = 60;
+  static double indexHeight = 22;
+
   final String name;
   final String? avatarUrl;
   final String? assetName;
@@ -20,7 +23,7 @@ class ContactCell extends StatelessWidget {
       children: [
         Container(
           color: Colors.grey,
-          height: indexLetter == null ? 0 : 22,
+          height: indexLetter == null ? 0 : ContactCell.indexHeight,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -30,7 +33,7 @@ class ContactCell extends StatelessWidget {
           ),
         ),
         Container(
-          height: 60,
+          height: ContactCell.baseCellHeight,
           color: Colors.white,
           child: Stack(
             children: [
