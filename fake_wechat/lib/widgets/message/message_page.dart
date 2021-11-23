@@ -1,7 +1,10 @@
+import 'package:fake_wechat/widgets/message/conversation_data.dart';
 import 'package:fake_wechat/widgets/service/service_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'conversation_cell.dart';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -15,13 +18,19 @@ class _MessagePageState extends State<MessagePage> {
     _loadConversation();
   }
 
+  List _conversations = [];
+
   /// 加载会话列表
   void _loadConversation() async {
     var response = await http.get(ServiceURL.conversationList);
-    print(response.body);
-
-    json.decode(response.body);
-
+    if (response.statusCode == 200) {
+      final bodyMap = json.decode(response.body);
+      _conversations = bodyMap['lists'].map((item) {
+        return ConversationData.formMap(item);
+      }).toList();
+    } else {
+      throw Exception('请求失败：${response.statusCode}');
+    }
   }
 
   PopupMenuItem _buildPopItem(String title, IconData icon) {
@@ -32,7 +41,9 @@ class _MessagePageState extends State<MessagePage> {
             icon,
             color: Colors.white,
           ),
-          SizedBox(width: 8,),
+          SizedBox(
+            width: 8,
+          ),
           Text(
             title,
             style: const TextStyle(color: Colors.grey),
@@ -40,6 +51,10 @@ class _MessagePageState extends State<MessagePage> {
         ],
       ),
     );
+  }
+
+  Widget _itemForRow(BuildContext context, int index) {
+    return ConversationCell(conversation: _conversations[index]);
   }
 
   @override
@@ -65,9 +80,11 @@ class _MessagePageState extends State<MessagePage> {
       ),
       body: Container(
         color: Colors.yellow,
-        child: const Image(image: AssetImage('images/公众号.png')),
+        child: ListView.builder(
+          itemBuilder: _itemForRow,
+          itemCount: _conversations.length,
+        ),
       ),
     );
   }
-
 }
