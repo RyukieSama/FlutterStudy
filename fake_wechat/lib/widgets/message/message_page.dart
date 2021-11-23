@@ -1,4 +1,7 @@
+import 'package:fake_wechat/widgets/service/service_url.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -6,6 +9,21 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadConversation();
+  }
+
+  /// 加载会话列表
+  void _loadConversation() async {
+    var response = await http.get(ServiceURL.conversationList);
+    print(response.body);
+
+    json.decode(response.body);
+
+  }
+
   PopupMenuItem _buildPopItem(String title, IconData icon) {
     return PopupMenuItem(
       child: Row(
@@ -51,4 +69,5 @@ class _MessagePageState extends State<MessagePage> {
       ),
     );
   }
+
 }
