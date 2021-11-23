@@ -23,15 +23,8 @@ class ConversationCell extends StatelessWidget {
                   const SizedBox(
                     width: 12,
                   ),
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      image: DecorationImage(
-                        image: NetworkImage(conversation.avatar),
-                      ),
-                    ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(conversation.avatar),
                   ),
                   const SizedBox(
                     width: 12,
