@@ -3,7 +3,6 @@ import 'package:fake_wechat/widgets/service/service_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'conversation_cell.dart';
 
 class MessagePage extends StatefulWidget {
@@ -21,11 +20,11 @@ class _MessagePageState extends State<MessagePage> {
   List _conversations = [];
 
   /// 加载会话列表
-  void _loadConversation() async {
+  Future<List> _loadConversation() async {
     var response = await http.get(ServiceURL.conversationList);
     if (response.statusCode == 200) {
       final bodyMap = json.decode(response.body);
-      _conversations = bodyMap['lists'].map((item) {
+      return bodyMap['lists'].map((item) {
         return ConversationData.formMap(item);
       }).toList();
     } else {
@@ -53,9 +52,9 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  Widget _itemForRow(BuildContext context, int index) {
-    return ConversationCell(conversation: _conversations[index]);
-  }
+//  Widget _itemForRow(BuildContext context, int index) {
+//    return ConversationCell(conversation: _conversations[index]);
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +79,20 @@ class _MessagePageState extends State<MessagePage> {
       ),
       body: Container(
         color: Colors.yellow,
-        child: ListView.builder(
-          itemBuilder: _itemForRow,
-          itemCount: _conversations.length,
+        child: FutureBuilder(
+          future: _loadConversation(),
+          builder: (context, AsyncSnapshot snap){
+            if (snap.connectionState != ConnectionState.done) {
+              return const Center(
+                child: Text('Loading'),
+              );
+            }
+            return ListView(
+              children: snap.data.map<Widget>((item){
+                return ConversationCell(conversation: item);
+              }).toList(),
+            );
+          },
         ),
       ),
     );
