@@ -18,15 +18,22 @@ class _MessagePageState extends State<MessagePage> {
   }
 
   List _conversations = [];
+  bool _isLoading = false;
 
   /// 加载会话列表
-  Future<List> _loadConversation() async {
+  void _loadConversation() async {
+    _isLoading = true;
     var response = await http.get(ServiceURL.conversationList);
+    _isLoading = false;
     if (response.statusCode == 200) {
       final bodyMap = json.decode(response.body);
-      return bodyMap['lists'].map((item) {
+      final result = bodyMap['lists'].map((item) {
         return ConversationData.formMap(item);
       }).toList();
+
+      setState(() {
+        _conversations = result;
+      });
     } else {
       throw Exception('请求失败：${response.statusCode}');
     }
@@ -52,9 +59,9 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-//  Widget _itemForRow(BuildContext context, int index) {
-//    return ConversationCell(conversation: _conversations[index]);
-//  }
+  Widget _itemForRow(BuildContext context, int index) {
+    return ConversationCell(conversation: _conversations[index]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,21 +86,14 @@ class _MessagePageState extends State<MessagePage> {
       ),
       body: Container(
         color: Colors.yellow,
-        child: FutureBuilder(
-          future: _loadConversation(),
-          builder: (context, AsyncSnapshot snap){
-            if (snap.connectionState != ConnectionState.done) {
-              return const Center(
+        child: _isLoading
+            ? Center(
                 child: Text('Loading'),
-              );
-            }
-            return ListView(
-              children: snap.data.map<Widget>((item){
-                return ConversationCell(conversation: item);
-              }).toList(),
-            );
-          },
-        ),
+              )
+            : ListView.builder(
+                itemBuilder: _itemForRow,
+                itemCount: _conversations.length,
+              ),
       ),
     );
   }
