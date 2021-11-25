@@ -27,6 +27,12 @@ class _MyHomePageDataSource extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: (idx) {
+          setState(() {
+            _selectedTab = idx;
+          });
+        },
         controller: _pageController,
         children: _pages,
       ),
