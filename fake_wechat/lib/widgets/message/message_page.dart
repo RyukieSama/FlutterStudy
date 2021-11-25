@@ -10,18 +10,29 @@ class MessagePage extends StatefulWidget {
   _MessagePageState createState() => _MessagePageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
+class _MessagePageState extends State<MessagePage> with AutomaticKeepAliveClientMixin<MessagePage> {
   @override
   void initState() {
     super.initState();
-    _loadConversation();
+    _loadConversation().then((value) {
+      setState(() {
+        _conversations = value;
+      });
+    }).catchError((error) {
+      print(error);
+    }).whenComplete(() {
+      print('Done');
+    }).timeout(Duration(seconds: 10));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   List _conversations = [];
   bool _isLoading = false;
 
   /// 加载会话列表
-  void _loadConversation() async {
+  Future<List> _loadConversation() async {
     _isLoading = true;
     var response = await http.get(ServiceURL.conversationList);
     _isLoading = false;
@@ -31,9 +42,7 @@ class _MessagePageState extends State<MessagePage> {
         return ConversationData.formMap(item);
       }).toList();
 
-      setState(() {
-        _conversations = result;
-      });
+      return result;
     } else {
       throw Exception('请求失败：${response.statusCode}');
     }
@@ -65,6 +74,7 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('微信'),

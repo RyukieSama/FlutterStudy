@@ -15,12 +15,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageDataSource extends State<MyHomePage> {
   int _selectedTab = 0;
-  final List<Widget> _pages = [MessagePage(), ContactsPage(), MommentPage(), MinePage()];
+  final List<Widget> _pages = [
+    MessagePage(),
+    ContactsPage(),
+    MommentPage(),
+    MinePage()
+  ];
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedTab],
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
 //        type: BottomNavigationBarType.fixed, // 这样就是标准的哪种
 //        fixedColor: Colors.green,//选中颜色
@@ -30,6 +39,7 @@ class _MyHomePageDataSource extends State<MyHomePage> {
         onTap: (idx) {
           setState(() {
             _selectedTab = idx;
+            _pageController.jumpToPage(_selectedTab);
           });
         },
         items: const [
