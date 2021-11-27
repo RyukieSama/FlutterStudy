@@ -4,25 +4,31 @@ import 'package:flutter/material.dart';
 int number = 1;
 
 void main() {
-  Future(() {
-    sleep(const Duration(seconds: 1));
-    number += 1;
-    print("${DateTime.now()}: $number");
-    return number;
-  }).then((value) {
-    sleep(const Duration(seconds: 1));
-    value += 1;
-    print("${DateTime.now()}: $value");
-    return value;
-  }).then((value) {
-    sleep(const Duration(seconds: 1));
-    value += 1;
-    print("${DateTime.now()}: $value");
-    return value;
-  }).then((value) {
-    sleep(const Duration(seconds: 1));
-    value += 1;
-    print("${DateTime.now()}: $value");
-    return value;
+  Future.wait([
+    Future(() {
+      sleep(Duration(seconds: 1));
+      print('${DateTime.now()}: 1');
+      return "任务1";
+    }),
+    Future(() {
+      sleep(Duration(seconds: 1));
+      print('${DateTime.now()}: 2');
+      return "任务2";
+    }),
+    Future(() {
+      sleep(Duration(seconds: 1));
+      print('${DateTime.now()}: 3');
+    }),
+    Future(() {
+      sleep(Duration(seconds: 1));
+      print('${DateTime.now()}: 4');
+    }),
+    Future(() {
+      sleep(Duration(seconds: 1));
+      print('${DateTime.now()}: 5');
+      return "任务5";
+    }),
+  ]).then((value) {
+    print(value);
   });
 }
