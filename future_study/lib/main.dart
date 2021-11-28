@@ -1,32 +1,21 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 import 'package:flutter/material.dart';
 
 int number = 1;
 
 void main() {
-  Future((){
-    print('1');
-  }).then((value){
-    print('2');
-    scheduleMicrotask((){
-      print('3');
-    });
-  }).then((value){
-    print('4');
-  });
+  print('${DateTime.now()}: 1');
 
-  scheduleMicrotask((){
-    print('5');
-  });
+  Isolate.spawn(isolateFunc, 15);
 
-  Future((){
-    print('6');
-  });
 
-  scheduleMicrotask((){
-    print('7');
-  });
+  sleep(Duration(seconds: 3));
+  print('${DateTime.now()}: Sleep end');
+}
 
-  print('8');
+void isolateFunc(int value) {
+  sleep(Duration(seconds: 1));
+  print('${DateTime.now()}: isolateFunc end $value');
 }
