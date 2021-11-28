@@ -5,25 +5,25 @@ import 'package:flutter/material.dart';
 
 int number = 1;
 
-void main() {
+void main() async {
   print('${DateTime.now()}: 1');
 
-  Isolate.spawn(isolateFunc, 1);
-  Isolate.spawn(isolateFunc, 2);
-  Isolate.spawn(isolateFunc, 3);
-  Isolate.spawn(isolateFunc, 4);
-  Isolate.spawn(isolateFunc, 5);
-  Isolate.spawn(isolateFunc, 6);
-  Isolate.spawn(isolateFunc, 7);
-  Isolate.spawn(isolateFunc, 8);
-  Isolate.spawn(isolateFunc, 9);
-  Isolate.spawn(isolateFunc, 10);
-
-  sleep(Duration(seconds: 5));
-  print('${DateTime.now()}: Sleep end，number = $number');
+  // 创建端口
+  ReceivePort port = ReceivePort();
+  // Isolate
+  Isolate iso = await Isolate.spawn(isolateFunc, port.sendPort);
+  // 监听数据变化
+  port.listen((message) {
+    number = message;
+    print('${DateTime.now()}: 监听到 number = $number');
+    // 关闭端口
+    port.close();
+    // 销毁 Isolate
+    iso.kill();
+  });
 }
 
-void isolateFunc(int value) {
-  number += 1;
-  print('${DateTime.now()}: 第$value个调用， number = $number');
+void isolateFunc(SendPort send) {
+  sleep(Duration(seconds: 3));
+  send.send(15);
 }
