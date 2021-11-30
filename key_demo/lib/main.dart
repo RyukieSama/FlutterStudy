@@ -59,6 +59,8 @@ class _HomePageState extends State<HomePage> {
 
 class ColorItem extends StatefulWidget {
   final String title;
+  final color = Color.fromRGBO(
+      Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1.0);
 
   ColorItem(this.title, {Key? key}) : super(key: key);
 
@@ -67,15 +69,13 @@ class ColorItem extends StatefulWidget {
 }
 
 class _ColorItemState extends State<ColorItem> {
-  final color = Color.fromRGBO(
-      Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1.0);
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 100,
       height: 100,
       child: Text(widget.title),
-      color: color,
+      color: widget.color,
     );
   }
 }
