@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -30,9 +31,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //key的作用就非常大了！！
   List<Widget> items = [
-    ColorItem('第1个'),
-    ColorItem('第2个'),
-    ColorItem('第3个'),
+    ColorItem(
+      '第1个',
+      key: ValueKey(1),
+    ),
+    ColorItem(
+      '第2个',
+      key: ValueKey(2),
+    ),
+    ColorItem(
+      '第3个',
+      key: ValueKey(3),
+    ),
   ];
 
   @override
@@ -59,8 +69,6 @@ class _HomePageState extends State<HomePage> {
 
 class ColorItem extends StatefulWidget {
   final String title;
-  final color = Color.fromRGBO(
-      Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1.0);
 
   ColorItem(this.title, {Key? key}) : super(key: key);
 
@@ -69,13 +77,16 @@ class ColorItem extends StatefulWidget {
 }
 
 class _ColorItemState extends State<ColorItem> {
+  final color = Color.fromRGBO(
+      Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1.0);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 100,
       height: 100,
       child: Text(widget.title),
-      color: widget.color,
+      color: color,
     );
   }
 }
