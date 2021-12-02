@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:fake_wechat/widgets/me/me_header_view.dart';
 import 'package:fake_wechat/widgets/moment/moment_home_cell.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -8,6 +10,24 @@ class MinePage extends StatefulWidget {
 }
 
 class _MinePageState extends State<MinePage> {
+  final String _selAvatar = 'sel_avatar';
+  final String _reciveImagePath = 'rec_imagePath';
+  final MethodChannel _channel = const MethodChannel('mine_header/channel');
+  String? _avatarPath;
+
+  @override
+  void initState() {
+    super.initState();
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == _reciveImagePath) {
+        print('${call.arguments}');
+        setState(() {
+          _avatarPath = call.arguments.toString();
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +38,15 @@ class _MinePageState extends State<MinePage> {
             MediaQuery.removePadding(
               removeTop: true,
               context: context,
-              child: Container(
               child: ListView(
-                children: <Widget> [
-                  MeHeaderView(),
-                  SizedBox(
+                children: <Widget>[
+                  MeHeaderView(
+                    avatarTap: () {
+                      _channel.invokeMapMethod(_selAvatar);
+                    },
+                    avatarFile: _avatarPath == null ? null : File(_avatarPath!),
+                  ),
+                  const SizedBox(
                     height: 12,
                   ),
                   MomentHomeCell(
@@ -36,7 +60,7 @@ class _MinePageState extends State<MinePage> {
 //                      );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   MomentHomeCell(
@@ -55,7 +79,7 @@ class _MinePageState extends State<MinePage> {
                     title: '表情',
                     imageName: 'images/微信表情.png',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   MomentHomeCell(
@@ -65,8 +89,7 @@ class _MinePageState extends State<MinePage> {
                 ],
               ),
             ),
-            ),
-            Positioned(
+            const Positioned(
               right: 12,
               top: 12,
               width: 60,
