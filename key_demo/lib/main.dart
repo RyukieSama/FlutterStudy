@@ -16,34 +16,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: GlobalKeyDemo(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class GlobalKeyDemo extends StatelessWidget {
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+  final GlobalKey<_GKeyItemState> _gKey = GlobalKey();
 
-class _HomePageState extends State<HomePage> {
-  //key的作用就非常大了！！
-  List<Widget> items = [
-    ColorItem(
-      '第1个',
-      key: ValueKey(1),
-    ),
-    ColorItem(
-      '第2个',
-      key: ValueKey(2),
-    ),
-    ColorItem(
-      '第3个',
-      key: ValueKey(3),
-    ),
-  ];
+  GlobalKeyDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +33,14 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Key的作用'),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: items,
+      body: Center(
+        child: GKeyItem(key: _gKey,),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          setState(() {
-            items.removeAt(0);
+          _gKey.currentState?.setState(() {
+            _gKey.currentState?.count += 1;
           });
         },
       ),
@@ -67,26 +48,22 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ColorItem extends StatefulWidget {
-  final String title;
 
-  ColorItem(this.title, {Key? key}) : super(key: key);
+class GKeyItem extends StatefulWidget {
+  const GKeyItem({Key? key}) : super(key: key);
 
   @override
-  _ColorItemState createState() => _ColorItemState();
+  _GKeyItemState createState() => _GKeyItemState();
 }
 
-class _ColorItemState extends State<ColorItem> {
-  final color = Color.fromRGBO(
-      Random().nextInt(256), Random().nextInt(256), Random().nextInt(256), 1.0);
+class _GKeyItemState extends State<GKeyItem> {
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      child: Text(widget.title),
-      color: color,
+    return Center(
+      child: Text('$count'),
     );
   }
 }
+
