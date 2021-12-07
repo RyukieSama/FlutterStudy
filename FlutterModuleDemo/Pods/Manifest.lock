@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - FlutterPluginRegistrant (0.0.1):
+    - Flutter
+  - test_module (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `test_module/.ios/Flutter/engine`)
+  - FlutterPluginRegistrant (from `test_module/.ios/Flutter/FlutterPluginRegistrant`)
+  - test_module (from `test_module/.ios/Flutter`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: test_module/.ios/Flutter/engine
+  FlutterPluginRegistrant:
+    :path: test_module/.ios/Flutter/FlutterPluginRegistrant
+  test_module:
+    :path: test_module/.ios/Flutter
+
+SPEC CHECKSUMS:
+  Flutter: bdfa2e8fe0e2880a2c6a58a0b1a8675c262a07af
+  FlutterPluginRegistrant: 2afd5ea46d3a949472c9b7da6462d8fbf7d8b16e
+  test_module: f2afd837608cd62c55b5469d5d533c4d3d1a88ee
+
+PODFILE CHECKSUM: 55df54883d71efb79301d134490ec7b9a59a5c7d
+
+COCOAPODS: 1.11.2
